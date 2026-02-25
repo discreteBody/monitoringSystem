@@ -1,0 +1,22 @@
+groups:
+  - name: application-rules
+    rules:
+      # Alert if any instance is down for more than 1 minute
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
+
+      # Alert if P99 latency is > 200ms (0.2s) for more than 1 minute
+      - alert: HighLatency
+        expr: histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket[5m])) by (le)) > 0.2
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Latency on {{ $labels.instance }}"
+          description: "P99 Latency is above 200ms (current value: {{ $value }}s)"
