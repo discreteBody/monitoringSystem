@@ -13,9 +13,11 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml # <--- Add this
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    environment:
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
     command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml' # <--- Add this
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
 
   grafana:
     image: grafana/grafana:latest

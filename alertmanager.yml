@@ -11,8 +11,7 @@ route:
 receivers:
   - name: 'discord-webhook'
     discord_configs:
-      # Notice: NO /slack at the end of this URL!
-      - webhook_url: 'https://discord.com/api/webhooks/1476512160375898253/k-JS80yPgRMhZSXfcBBKHXjsphfrVFfbqqSu8aH8-yinfVynF_8rJdjUfaps1Fcf6V4I'
+      - webhook_url: '${DISCORD_WEBHOOK_URL}'
         send_resolved: true
         title: '🚨 [{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
         message: >-
