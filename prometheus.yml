@@ -1,9 +1,17 @@
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s # How often to check the alert rules
+  evaluation_interval: 15s
+
+# THIS IS THE MISSING PIECE!
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            # This points to the service name in docker-compose.yml
+            - 'alertmanager:9093'
 
 rule_files:
-  - "alert_rules.yml" # <--- Add this line
+  - "alert_rules.yml"
 
 scrape_configs:
   - job_name: 'spring-boot-app'

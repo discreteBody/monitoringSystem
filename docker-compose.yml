@@ -8,6 +8,15 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alert_rules.yml:/etc/prometheus/alert_rules.yml
 
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml # <--- Add this
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml' # <--- Add this
+
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -17,8 +26,5 @@ services:
     depends_on:
       - prometheus
 
-  alertmanager:
-    image: prom/alertmanager:latest
-    ports:
-      - "9093:9093"
+
 
